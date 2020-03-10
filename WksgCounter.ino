@@ -43,6 +43,7 @@ void wksg_CounterStateMachine(int event) {
     }
     break;
   case EVENT_LONG_PRESS:
+    tmp = 0;
     break;
   default:
     break;
