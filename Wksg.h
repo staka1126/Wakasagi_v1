@@ -11,7 +11,7 @@
 #define DISPATCH_PERIOD     (10)
 
 // Speed Controller用定義・変数
-#define MOTOR_SPEED_DEFAULT (3)
+#define MOTOR_SPEED_DEFAULT (5)
 #define MOTOR_SPEED_MINIMUM (1)
 #define MOTOR_SPEED_MAXIMUM (5)
 
@@ -24,10 +24,11 @@
 #define PORT_MOTOR_IN01     (17)
 #define PORT_MOTOR_IN02     (16)
 
-#define MOTOR_SPEED_VARIABLE  true
+// モータースピードコントロールチャンネル
+#define PWM_CHANNEL         (0)
 
 // ちょい巻時間(ms)
-#define CYOIMAKI_TIMER_INIT (1000)
+#define CYOIMAKI_TIMER_INIT (500)
 
 // DISP OFF時間(ms)
 #define DISPLAY_TIMER_INIT  (5000)

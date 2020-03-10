@@ -6,7 +6,6 @@ void wksg_SpeedControllerInit() {
 }
 
 void wksg_SpeedControllerStateMachine(int event) {
-#if MOTOR_SPEED_VARIABLE
   switch(event) {
   case EVENT_FALLING_EDGE:
     break;
@@ -28,13 +27,8 @@ void wksg_SpeedControllerStateMachine(int event) {
     break;
   }
   wksg_SpeedControllerUpdate();
-#endif
 }
 
 void wksg_SpeedControllerUpdate() {
-#if MOTOR_SPEED_VARIABLE
-//  analogWrite(PORT_MOTOR_SPEED, 255/motor_speed*MOTOR_SPEED_MAXIMUM);
-#else
-  digitalWrite(PORT_MOTOR_SPEED, LOW);
-#endif
+  ledcWrite(PWM_CHANNEL, 205 + motor_speed * 10);
 }

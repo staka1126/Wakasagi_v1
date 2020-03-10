@@ -8,6 +8,8 @@ void wksg_MotorInit() {
   pinMode(PORT_MOTOR_SPEED, OUTPUT);
   pinMode(PORT_MOTOR_IN01, OUTPUT);
   pinMode(PORT_MOTOR_IN02, OUTPUT);
+  ledcSetup(PWM_CHANNEL,12800,8); 
+  ledcAttachPin(PORT_MOTOR_SPEED,PWM_CHANNEL);
 }
 
 void wksg_MotorStateMachine(int event) {
@@ -33,8 +35,8 @@ void wksg_MotorStateMachine(int event) {
 
 void wksg_MotorStart() {
   wksg_LogWrite(MODULE_MOTOR, String("motor start(speed:" + String(motor_speed) + ")."));
-//  digitalWrite(PORT_MOTOR_IN01, HIGH);
-//  digitalWrite(PORT_MOTOR_IN02, LOW);
+  digitalWrite(PORT_MOTOR_IN01, HIGH);
+  digitalWrite(PORT_MOTOR_IN02, LOW);
   motor_status = true;
 }
 
@@ -44,7 +46,7 @@ void wksg_MotorCyoimakiStart() {
 
 void wksg_MotorStop() {
   wksg_LogWrite(MODULE_MOTOR, String("motor stop."));
-//  digitalWrite(PORT_MOTOR_IN01, LOW);
-//  digitalWrite(PORT_MOTOR_IN02, LOW);
+  digitalWrite(PORT_MOTOR_IN01, LOW);
+  digitalWrite(PORT_MOTOR_IN02, LOW);
   motor_status = false;
 }
