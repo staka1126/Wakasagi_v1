@@ -33,25 +33,8 @@
 // DISP OFF時間(ms)
 #define DISPLAY_TIMER_INIT  (5000)
 
-//==============================================================================
-// 構造体
-//==============================================================================
-struct SWITCH {
-  word port;
-  int id;
-  char name[20];
-  int setting;
-  boolean now;
-  boolean old;
-  unsigned long press_start;
-  unsigned long repeat_start;
-  int event; 
-};
-
-struct LOG {
-  char module_name[20];
-  boolean onoff;
-};
+// データの保存周期(ms)（0なら変化検出のたび毎回）
+#define SAVE_DATA_PERIOD    (1000*60*3)        // 3分
 
 //==============================================================================
 // enum値
@@ -64,6 +47,8 @@ enum {
   MODULE_COUNTER,
   MODULE_MOTOR,
   MODULE_DISPLAY,
+  MODULE_TIMER,
+  MODULE_EEPROM,
   MODULE_MAX
 };
 
@@ -89,46 +74,71 @@ enum {
   EVENT_DISPLAY_ON,
   EVENT_DISPLAY_OFF,
   EVENT_MOTOR_STOP,
+  EVENT_SAVE_DATA,
   EVENT_MAX
 };
 
+
 //==============================================================================
-// グローバル変数
+// グローバル変数（タイマー系）
 //==============================================================================
-// KEYの設定
-SWITCH sw[] = {
-  {PORT_SW01, KEY_SPEED, "speed", INPUT_PULLUP, true, true, 0, EVENT_NULL},
-  {PORT_SW02, KEY_COUNTER, "counter", INPUT_PULLUP, true, true, 0, EVENT_NULL},
-  {PORT_SW03, KEY_MOTOR, "motor", INPUT_PULLUP, true, true, 0, EVENT_NULL},
-  {PORT_SW04, KEY_STOP, "null", INPUT_PULLUP, true, true, 0, EVENT_NULL},
-};
-
-// ログの設定（enumと順序関係が連動しています）
-LOG log_settings[] = {
-  {"key", false},                 // MODULE_KEY
-  {"dispatcher", true},           // MODULE_DISPATCHER
-  {"speed controller", true},     // MODULE_SPEED_CONTROLLER
-  {"counter", true},              // MODULE_COUNTER
-  {"motor", true},                // MODULE_MOTOR
-  {"ssd1306", true}               // MODULE_DISPLAY
-};
-
-// ワカサギの数
-int wakasagi_counter = 0;
-
-// モーター速度
-int motor_speed = MOTOR_SPEED_DEFAULT;
-
-// モーターの回転状態
-boolean motor_status = false;
-
 // ちょい巻用のなんちゃってタイマー割り込み
 int cyoimaki_timer = 0;
 
 // ディスプレイ消灯用のなんちゃってタイマー割り込み
 int display_timer = 0;
 
+// データ保存用の周期タイマー
+int save_data_timer = 0;
+
+
+//==============================================================================
+// グローバル変数（タイマー以外）
+//==============================================================================
+// ログの設定用構造体
+struct LOG {
+  char module_name[20];
+  boolean onoff;
+} log_settings[] = {
+  {"key", false},                 // MODULE_KEY
+  {"dispatcher", true},           // MODULE_DISPATCHER
+  {"speed controller", true},     // MODULE_SPEED_CONTROLLER
+  {"counter", true},              // MODULE_COUNTER
+  {"motor", true},                // MODULE_MOTOR
+  {"ssd1306", true},              // MODULE_DISPLAY
+  {"timer", true},                // MODULE_TIMER
+  {"eeprom", true}                // MODULE_EEPROM
+};
+
+// KEYの設定
+struct SWITCH {
+  word port;
+  int id;
+  char name[20];
+  int setting;
+  boolean now;
+  boolean old;
+  unsigned long press_start;
+  unsigned long repeat_start;
+  int event; 
+} sw[] = {
+  {PORT_SW01, KEY_SPEED, "speed", INPUT_PULLUP, true, true, 0, EVENT_NULL},
+  {PORT_SW02, KEY_COUNTER, "counter", INPUT_PULLUP, true, true, 0, EVENT_NULL},
+  {PORT_SW03, KEY_MOTOR, "motor", INPUT_PULLUP, true, true, 0, EVENT_NULL},
+  {PORT_SW04, KEY_STOP, "null", INPUT_PULLUP, true, true, 0, EVENT_NULL},
+};
+
+// モーターの回転状態
+boolean motor_status = false;
+
 // 表示更新用のフラグ
 boolean dirty = true;
+
+// 電源を切っても保存しておきたいデータはこちらで管理
+struct SAVE_DATA {
+  int motor_speed;                // モーター速度
+  int wakasagi_counter;           // ワカサギの数
+} save_data;
+
 
 #endif

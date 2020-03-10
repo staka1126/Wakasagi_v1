@@ -3,7 +3,7 @@
 
 void wksg_MotorInit() {
   // グローバル変数の初期化
-  
+
   // デバイスの初期化
   pinMode(PORT_MOTOR_SPEED, OUTPUT);
   pinMode(PORT_MOTOR_IN01, OUTPUT);
@@ -34,7 +34,7 @@ void wksg_MotorStateMachine(int event) {
 }
 
 void wksg_MotorStart() {
-  wksg_LogWrite(MODULE_MOTOR, String("motor start(speed:" + String(motor_speed) + ")."));
+  wksg_LogWrite(MODULE_MOTOR, String("motor start(speed:" + String(save_data.motor_speed) + ")."));
   digitalWrite(PORT_MOTOR_IN01, HIGH);
   digitalWrite(PORT_MOTOR_IN02, LOW);
   motor_status = true;

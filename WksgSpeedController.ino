@@ -2,7 +2,9 @@
 
 void wksg_SpeedControllerInit() {
   // グローバル変数の初期化
-  motor_speed = MOTOR_SPEED_DEFAULT;
+  if (!((MOTOR_SPEED_MINIMUM <= save_data.motor_speed) && (save_data.motor_speed <= MOTOR_SPEED_MAXIMUM))) {    // 保存データの妥当性チェック
+    save_data.motor_speed = MOTOR_SPEED_DEFAULT;      // 不正な値だった場合はデフォルトにする
+  }
 }
 
 void wksg_SpeedControllerStateMachine(int event) {
@@ -10,15 +12,15 @@ void wksg_SpeedControllerStateMachine(int event) {
   case EVENT_FALLING_EDGE:
     break;
   case EVENT_RISING_EDGE:
-    if (motor_speed < MOTOR_SPEED_MAXIMUM) {
-      motor_speed++;
-      wksg_LogWrite(MODULE_SPEED_CONTROLLER, String("changed motor speed(" + String(motor_speed) + ")."));
+    if (save_data.motor_speed < MOTOR_SPEED_MAXIMUM) {
+      save_data.motor_speed++;
+      wksg_LogWrite(MODULE_SPEED_CONTROLLER, String("changed motor speed(" + String(save_data.motor_speed) + ")."));
     }
     break;
   case EVENT_KEY_REPEAT:
-    if (motor_speed > MOTOR_SPEED_MINIMUM) {
-      motor_speed--;
-      wksg_LogWrite(MODULE_SPEED_CONTROLLER, String("changed motor speed(" + String(motor_speed) + ")."));
+    if (save_data.motor_speed > MOTOR_SPEED_MINIMUM) {
+      save_data.motor_speed--;
+      wksg_LogWrite(MODULE_SPEED_CONTROLLER, String("changed motor speed(" + String(save_data.motor_speed) + ")."));
     }
     break;
   case EVENT_LONG_PRESS:
@@ -30,5 +32,5 @@ void wksg_SpeedControllerStateMachine(int event) {
 }
 
 void wksg_SpeedControllerUpdate() {
-  ledcWrite(PWM_CHANNEL, 205 + motor_speed * 10);
+  ledcWrite(PWM_CHANNEL, 205 + save_data.motor_speed * 10);
 }

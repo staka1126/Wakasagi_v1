@@ -1,6 +1,10 @@
 #include "Wksg.h"
 
-void wksg_TimerManager() {
+void wksg_TimerInit() {
+  
+}
+
+void wksg_TimerUpdate() {
   static int time_diff;
   static int time_old = 0;
 
@@ -12,7 +16,7 @@ void wksg_TimerManager() {
   //-----------------------------------------------------
   // ちょい巻タイマーイベント
   if (cyoimaki_timer > 0) {
-    cyoimaki_timer = cyoimaki_timer - time_diff;
+    cyoimaki_timer -= time_diff;
     if (cyoimaki_timer <= 0) {
       wksg_MotorStateMachine(EVENT_CYOIMAKI_STOP);
       dirty = true;
@@ -21,10 +25,18 @@ void wksg_TimerManager() {
 
   // ディスプレイOFFタイマーイベント
   if (display_timer > 0) {
-    display_timer = display_timer - time_diff;
+    display_timer -= time_diff;
     if (display_timer <= 0) {
       wksg_DisplayUpdate(EVENT_DISPLAY_OFF);
 //      dirty = true;
+    }
+  }
+
+  // データ保存用周期タイマー
+  if (save_data_timer > 0) {
+    save_data_timer -= time_diff;
+    if (save_data_timer <= 0) {
+      wksg_EepromSave(EVENT_SAVE_DATA);
     }
   }
 }

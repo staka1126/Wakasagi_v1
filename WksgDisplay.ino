@@ -94,30 +94,30 @@ void wksg_DisplayDrawCounter() {
   display.drawBitmap(4, 2, wakasagi_bmp, 24, 30, 1);
   display.setTextSize(4);
   display.setTextColor(WHITE);
-  if (wakasagi_counter < 10) {
+  if (save_data.wakasagi_counter < 10) {
     display.setCursor(100, 2);
   }
-  else if (wakasagi_counter < 100) {
+  else if (save_data.wakasagi_counter < 100) {
     display.setCursor(76, 2);
   }
-  else if (wakasagi_counter < 1000) {
+  else if (save_data.wakasagi_counter < 1000) {
     display.setCursor(52, 2);
   }
-  else if (wakasagi_counter < 10000) {
+  else if (save_data.wakasagi_counter < 10000) {
     display.setCursor(28, 2);
   }
   else {
-    wakasagi_counter = 9999;
+    save_data.wakasagi_counter = 9999;
     display.setCursor(28, 2);
   }
-  display.println(wakasagi_counter);
+  display.println(save_data.wakasagi_counter);
 }
 
 void wksg_DisplayDrawMotorSpeed() {
   display.setTextSize(1);
   display.setCursor(4, 39);
   display.println("Motor Speed");
-  for(int i = 0; i < motor_speed; i++) {
+  for(int i = 0; i < save_data.motor_speed; i++) {
     // 設定値を表示
     display.fillRect(4 + i * 24 + 2, 49, 20, 10, 1);
     if (motor_status) {
