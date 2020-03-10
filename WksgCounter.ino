@@ -1,4 +1,10 @@
-#include "Wksg.h"
+/**
+ * @file WksgCounter.ino
+ * @brief ワカサギの連れた数の管理を行う
+ * @author staka1126@gmail.com
+ * @date 2020/03/10
+ */
+ #include "Wksg.h"
 
 void wksg_CounterInit() {
   // グローバル変数の初期化

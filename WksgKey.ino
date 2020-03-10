@@ -1,3 +1,9 @@
+/**
+ * @file Wksg.h
+ * @brief ワカサギ用電動リールの押しボタンの検出を行うモジュール
+ * @author staka1126@gmail.com
+ * @date 2020/03/10
+ */
 #include "Wksg.h"
 
 void wksg_KeyInit(){

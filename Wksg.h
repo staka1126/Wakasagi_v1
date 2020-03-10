@@ -1,3 +1,9 @@
+/**
+ * @file Wksg.h
+ * @brief ワカサギ用電動リールの制御ファームウェアヘッダ
+ * @author staka1126@gmail.com
+ * @date 2020/03/10
+ */
 #ifndef INCLUDE_WAKASAGI_H
 #define INCLUDE_WAKASAGI_H
 
@@ -39,7 +45,10 @@
 //==============================================================================
 // enum値
 //==============================================================================
-// LOGの設定
+/**
+ * @enum MODULE
+ * モジュールID
+ */
 enum {
   MODULE_KEY = 0,
   MODULE_DISPATCHER,
@@ -52,7 +61,10 @@ enum {
   MODULE_MAX
 };
 
-// KEY定義
+/**
+ * @enum KEY
+ * KEY ID
+ */
 enum {
   KEY_NULL = 0,
   KEY_SPEED,
@@ -64,6 +76,10 @@ enum {
 };
 
 // EVENT定義
+/**
+ * @enum EVENT
+ * EVENT ID
+ */
 enum {
   EVENT_NULL = 0,
   EVENT_FALLING_EDGE,
@@ -95,7 +111,10 @@ int save_data_timer = 0;
 //==============================================================================
 // グローバル変数（タイマー以外）
 //==============================================================================
-// ログの設定用構造体
+/**
+ * @struct LOG
+ * ログの設定値を管理する構造体
+ */
 struct LOG {
   char module_name[20];
   boolean onoff;
@@ -110,7 +129,10 @@ struct LOG {
   {"eeprom", true}                // MODULE_EEPROM
 };
 
-// KEYの設定
+/**
+ * @struct KEY
+ * KEYの設定値を管理する構造体
+ */
 struct SWITCH {
   word port;
   int id;

@@ -1,3 +1,9 @@
+/**
+ * @file WksgMain.ino
+ * @brief ワカサギ用電動リールの制御ファームウェアメイン
+ * @author staka1126@gmail.com
+ * @date 2020/03/10
+ */
 #include "Wksg.h"
 
 void setup() {

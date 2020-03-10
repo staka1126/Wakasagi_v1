@@ -1,3 +1,9 @@
+/**
+ * @file Wksg.h
+ * @brief ワカサギ用電動リールのデータを読出し・書き込みを行うモジュール
+ * @author staka1126@gmail.com
+ * @date 2020/03/10
+ */
 #include "Wksg.h"
 #include "EEPROM.h"
 

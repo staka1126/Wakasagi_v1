@@ -1,3 +1,9 @@
+/**
+ * @file Wksg.h
+ * @brief ワカサギ用電動リールの各モジュールからのログを出力するモジュール
+ * @author staka1126@gmail.com
+ * @date 2020/03/10
+ */
 #include "Wksg.h"
 
 void wksg_LogInit(void){
