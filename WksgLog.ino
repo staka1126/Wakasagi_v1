@@ -18,7 +18,7 @@ void wksg_LogInit(void){
 
   // デバイスの初期化
   Serial.begin(115200);
-  SerialBT.begin("ESP32test"); //Bluetooth device name
+  SerialBT.begin("ESP32_Wksg"); //Bluetooth device name
 }
 
 void wksg_LogWrite(int module_id, String str){
