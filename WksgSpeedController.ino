@@ -38,5 +38,10 @@ void wksg_SpeedControllerStateMachine(int event) {
 }
 
 void wksg_SpeedControllerUpdate() {
+#ifdef ARDUINO_ESP32_DEV
   ledcWrite(PWM_CHANNEL, 205 + save_data.motor_speed * 10);
+#elif ARDUINO_AVR_NANO
+  analogWrite(PORT_MOTOR_SPEED, 205 + save_data.motor_speed * 10);
+#endif
+
 }

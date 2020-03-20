@@ -14,8 +14,12 @@ void wksg_MotorInit() {
   pinMode(PORT_MOTOR_SPEED, OUTPUT);
   pinMode(PORT_MOTOR_IN01, OUTPUT);
   pinMode(PORT_MOTOR_IN02, OUTPUT);
+#ifdef ARDUINO_ESP32_DEV
   ledcSetup(PWM_CHANNEL,12800,8); 
   ledcAttachPin(PORT_MOTOR_SPEED,PWM_CHANNEL);
+#elif ARDUINO_AVR_NANO
+  pinMode(PORT_MOTOR_SPEED, OUTPUT);
+#endif
 }
 
 void wksg_MotorStateMachine(int event) {

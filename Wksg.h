@@ -22,6 +22,7 @@
 #define MOTOR_SPEED_MAXIMUM (5)
 
 // PORT定義
+#ifdef ARDUINO_ESP32_DEV
 #define PORT_SW01           (26)
 #define PORT_SW02           (27)
 #define PORT_SW03           (32)
@@ -29,6 +30,15 @@
 #define PORT_MOTOR_SPEED    (4)
 #define PORT_MOTOR_IN01     (17)
 #define PORT_MOTOR_IN02     (16)
+#elif ARDUINO_AVR_NANO
+#define PORT_SW01           (26)
+#define PORT_SW02           (27)
+#define PORT_SW03           (32)
+#define PORT_SW04           (33)
+#define PORT_MOTOR_SPEED    (4)
+#define PORT_MOTOR_IN01     (17)
+#define PORT_MOTOR_IN02     (16)
+#endif
 
 // モータースピードコントロールチャンネル
 #define PWM_CHANNEL         (0)
